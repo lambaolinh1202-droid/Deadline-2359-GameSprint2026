@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "DEADLINE: 23:59"
+description = "A playable single-screen idle RPG about Superhero Ong Poly defending a distant planet from zombie waves. Includes automatic combat, hero/tower/ally upgrades, offline coin progress, timed boss encounters, and win/defeat states in a vertical sci-fi game interface."
+version = "1.0.0"
+id = "artifacts/deadline-2359"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 23205
+
+[services.development]
+run = "pnpm --filter @workspace/deadline-2359 run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/deadline-2359", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/deadline-2359/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "23205"
+BASE_PATH = "/"
